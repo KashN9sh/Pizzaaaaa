@@ -18,7 +18,7 @@ class PizzaList extends React.Component {
     const rows = [];
 
     this.props.pizzaBuyers.forEach((buyer) => {
-      rows.push(<PizzaBuyer name="Roma" pizzaCount="1" />);
+      rows.push(<PizzaBuyer name={buyer.name} pizzaCount={buyer.pizzaCount} />);
     });
 
     return (
@@ -37,24 +37,63 @@ class PizzaList extends React.Component {
 
 var Peoples = [];
 
-function activateLasers() {
-  Peoples.push({ name: "Roma", pizzaCount: 1 });
-  console.log(Peoples);
+class DobovlyaloLudey extends React.Component {
+  constructor(props) {
+    super(props);
+    this.activateLasers = this.activateLasers.bind(this);
+    this.handleNameTextChange = this.handleNameTextChange.bind(this);
+    this.handleCountTextChange = this.handleCountTextChange.bind(this);
+    this.state = {
+      name: "1",
+      count: "1"
+    };
+  }
 
-  const element = (
-    <div>
-      <button onClick={activateLasers}>Активировать лазеры</button>
-      <PizzaList pizzaBuyers={Peoples} />
-    </div>
-  );
-  ReactDOM.render(element, document.getElementById("root"));
+  handleNameTextChange(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  handleCountTextChange(e) {
+    this.setState({ count: e.target.value });
+  }
+
+  activateLasers() {
+    Peoples.push({ name: this.state.name, pizzaCount: this.state.count });
+    console.log(Peoples);
+
+    const element = (
+      <div>
+        <input
+          type="text"
+          placeholder="ИМЯ"
+          onChange={this.handleNameTextChange}
+        />
+        <input
+          type="text"
+          placeholder="СКОКА КУСКОФ"
+          onChange={this.handleCountTextChange}
+        />
+        <button onClick={this.activateLasers}>Активировать лазеры</button>
+        <PizzaList pizzaBuyers={Peoples} />
+      </div>
+    );
+    ReactDOM.render(element, document.getElementById("root"));
+  }
+
+  render() {
+    return (
+      <div>
+        {/* <input> </input> */}
+        <button onClick={this.activateLasers}>Активировать лазеры</button>
+      </div>
+    );
+  }
 }
 
 export default function App() {
   return (
     <div className="App">
-      <button onClick={activateLasers}>Активировать лазеры</button>
-      <PizzaList pizzaBuyers={Peoples} />
+      <DobovlyaloLudey />
     </div>
   );
 }
